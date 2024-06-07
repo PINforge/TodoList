@@ -1,0 +1,45 @@
+﻿@model IEnumerable<TodoList.Models.Task>
+
+@{
+    ViewBag.Title = "Tasks";
+}
+
+<div class="container mt-5">
+    <h2>Tasks</h2>
+
+    <p>
+        <a href="@Url.Action("Create")" class="btn btn-primary">Create New</a>
+    </p>
+
+    <!-- Sorting buttons -->
+    <p>
+        Sort by:
+        <a href="@Url.Action("SortByDate", new { todoListId = ViewBag.TodoListId })" class="btn btn-link">Date</a> |
+        <a href="@Url.Action("SortByPriority", new { todoListId = ViewBag.TodoListId })" class="btn btn-link">Priority</a> |
+        <a href="@Url.Action("SortByCompletion", new { todoListId = ViewBag.TodoListId })" class="btn btn-link">Completion</a>
+    </p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Description)</th>
+                <th>@Html.DisplayNameFor(model => model.IsCompleted)</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                    <td>@Html.DisplayFor(modelItem => item.IsCompleted)</td>
+                    <td>
+                        <a href="@Url.Action("Details", "TodoLists", new { id = item.TodoListId })" class="btn btn-info">Details</a> |
+                        <a href="@Url.Action("Edit", new { id = item.Id })" class="btn btn-warning">Edit</a> |
+                        <a href="@Url.Action("Delete", new { id = item.Id })" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

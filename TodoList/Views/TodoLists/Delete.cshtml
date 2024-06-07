@@ -1,0 +1,35 @@
+﻿@model TodoList.Models.TodoList
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<div class="container mt-5">
+    <h2>Delete</h2>
+
+    <h3>Are you sure you want to delete this?</h3>
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">TodoList</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+            </dl>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    <div class="btn-group">
+                        <input type="submit" value="Delete" class="btn btn-danger" /> |
+                        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

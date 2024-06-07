@@ -1,0 +1,73 @@
+﻿@model TodoList.Models.TodoList
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="container mt-5">
+    <h2>Details</h2>
+
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">TodoList</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" }) |
+            @Html.ActionLink("Back to List", "Index", "TodoLists", null, new { @class = "btn btn-secondary" })
+        </p>
+
+        <!-- Add sorting buttons -->
+        <p>
+            Sort by:
+            <a href="@Url.Action("SortByDate", "Tasks", new { todoListId = Model.Id })" class="btn btn-link">Date</a> |
+            <a href="@Url.Action("SortByPriority", "Tasks", new { todoListId = Model.Id })" class="btn btn-link">Priority</a> |
+            <a href="@Url.Action("SortByCompletion", "Tasks", new { todoListId = Model.Id })" class="btn btn-link">Completion</a>
+        </p>
+
+        <!-- Display tasks -->
+        <h3>Tasks</h3>
+        @if (Model.Tasks.Any())
+        {
+            <table class="table">
+                <tr>
+                    <th>Description</th>
+                    <th>Is Completed</th>
+                    <th>Actions</th>
+                </tr>
+                @foreach (var task in Model.Tasks)
+                {
+                    <tr>
+                        <td>@task.Description</td>
+                        <td>@(task.IsCompleted ? "Yes" : "No")</td>
+                        <td>
+                            @Html.ActionLink("Details", "Details", "Tasks", new { id = task.Id }, new { @class = "btn btn-info btn-sm" }) |
+                            @Html.ActionLink("Edit", "Edit", "Tasks", new { id = task.Id }, new { @class = "btn btn-warning btn-sm" }) |
+                            @Html.ActionLink("Delete", "Delete", "Tasks", new { id = task.Id }, new { @class = "btn btn-danger btn-sm" })
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
+        else
+        {
+            <p>No tasks found.</p>
+        }
+
+        <!-- Add link to create task -->
+        <p>
+            @Html.ActionLink("Add Task", "Create", "Tasks", new { todoListId = Model.Id }, new { @class = "btn btn-primary" })
+        </p>
+    </div>
+</div>
